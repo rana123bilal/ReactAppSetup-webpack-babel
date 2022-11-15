@@ -4,12 +4,17 @@ const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 var AssetsPlugin = require("assets-webpack-plugin");
+const Dotenv = require('dotenv-webpack');
+
 
 module.exports = {
   mode: "development",
   entry: "./src/index.js",
 
   plugins: [
+    new Dotenv({
+      path: './env.development',
+    }),
     new HTMLWebpackPlugin({
       template: "./src/index.html",
     }),
@@ -17,20 +22,6 @@ module.exports = {
     new CleanWebpackPlugin(),
     new AssetsPlugin(),
   ],
-
-  optimization: {
-    minimizer: [
-      new TerserPlugin(),
-      new HTMLWebpackPlugin({
-        template: "./src/index.html",
-        minify: {
-          removeAttributeQuotes: true,
-          collapseWhitespace: true,
-          removeComments: true,
-        },
-      }),
-    ],
-  },
 
   module: {
     rules: [
